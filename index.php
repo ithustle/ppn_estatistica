@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Olá</title>
+	<title>Portal de Divulgação da Produção Nacional | Estatísticas</title>
    
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -9,25 +9,16 @@
 <body>
     <header class="cabeca">
         <div class="topo">
-            <h3>Analise por tempo de serviço</h3>
+            <h3>Portal de Divulgação da Produção Nacional | Estatísticas</h3>
         </div>
         <nav class="menu">
-                <nav class="nav-lateral">
-                    <div class="info">
-                        <span>Tempo de servico</span>
-                    </div>
-                    <button>1-10</button>
-                     <button>11-20</button>
-                     <button>21-30</button>
-                     <button>31-40</button>
-                </nav>
-                 <nav class="nav-frotal">
-                     <button>com menu</button>
-                     <button>contact</button>
-                     <button>sobre</button>
-                     <button>Equipa</button>
-                 </nav>
+            <nav class="content-admin">
+                <div class="info">
+                    <span>Área de administrador</span>
+                </div>
+                <button>Entrar</button>
             </nav>
+        </nav>
     </header>
     <main class="corpo">
       <section class="caixa1">

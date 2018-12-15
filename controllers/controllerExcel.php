@@ -1,9 +1,14 @@
 <?php 
 	
-	require './../vendor/autoload.php';
+    require './../vendor/autoload.php';
+    require "./../class/Conexao.php";
+    require "./../class/Produtor.php";
+    require "./../class/ProdutorDao.php";
 
- 	$fileName = "test.xlsx";
- 
+    $fileName = "test.xlsx";
+     
+    $conexao = new Conexao();
+    
     /** automatically detect the correct reader to load for this file type */
     $excelReader = PHPExcel_IOFactory::createReaderForFile($fileName);
 
@@ -33,81 +38,12 @@
     
     //show the final array
     for ($i = 1; $i < count($return['teste']); $i++){
-        gravarContactos($cliente, $return['teste'][$i+1]['A'], $return['teste'][$i+1]['B'], $return['teste'][$i+1]['C']);
+        inserir($$return['teste'][$i+1]['A'], $return['teste'][$i+1]['B'], $return['teste'][$i+1]['C']);
     }
 
-    function conexao() {
-		private $dsn = 'mysql:host=localhost;dbname=ppn_estatistica';
-	    private $user = 'root';
-	    private $pass = 'naoexiste';
-	    private $cnn;
-	    private $localhost;
+    function inserir($a, $b, $c) {
+        $produtor = new Produtor($a, $b, $c);
+        $dao = new ProdutorDao($conexao, $produtor);
 
-
-	    public function __construct() {
-	        try {
-	            
-	            if ($this->cnn == NULL){
-	                
-	                $cnn = parent::__construct($this->dsn, $this->user, $this->pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-	                    /*,PDO::MYSQL_ATTR_SSL_KEY    =>'/etc/mysql/ssl/client-key.pem',
-	                    PDO::MYSQL_ATTR_SSL_CERT=>'/etc/mysql/ssl/client-cert.pem',
-	                    PDO::MYSQL_ATTR_SSL_CA    =>'/etc/mysql/ssl/ca-cert.pem' 
-	                    
-	                    )*/));
-	                $this->handle = $cnn;
-	                
-	                return $this->handle;
-	            }
-	            
-	        } catch (PDOException $exc) {
-	            
-	            throw new Exception ("Mensagem: ". $exc->getMessage(). "Código de erro: ". $exc->getCode());
-	            return FALSE;
-	        }
-	    }
-    }
-
-    function inserir() {
-        $sqlLock = "LOCK TABLES contactos WRITE";
-        $sqlUnlock = "UNLOCK TABLES";
-        $sql = "INSERT INTO contactos (numero_telefone, telefone, nome, empresa) VALUES (:numero, :telefone, :nome, :empresa)";
-
-        $this->conexao->beginTransaction();
-        $this->conexao->exec($sqlLock);
-        $exe = $this->conexao->prepare($sql);
-
-        $exe->bindValue(':numero', $this->contacto->getNumeroDeTelefone());
-        $exe->bindValue(':telefone', $this->contacto->getTelefone());
-        $exe->bindValue(':nome', $this->contacto->getNomeDoContacto());
-        $exe->bindValue(':empresa', $this->contacto->getEmpresaDoContacto());
-        
-        if (!$exe->execute()){
-            $this->conexao->rollBack();
-            print_r($exe->errorInfo()[2]);
-        }else{
-            $this->conexao->commit(); 
-            $this->conexao->exec($sqlUnlock);
-             
-            return true;
-        }
-    }
-
-    function eliminar() {
-        $sqlLock = "LOCK TABLES contactos WRITE";
-        $sqlUnlock = "UNLOCK TABLES";
-        $sql = "DELETE FROM contactos;";
-        conexao()->beginTransaction();
-        conexao()->exec($sqlLock);
-        $exe = conexao()->prepare($sql);
-        
-        if (!$exe->execute()){
-            $this->conexao->rollBack();
-            print_r($exe->errorInfo()[2]);
-        }else{
-            conexao()->commit(); 
-            conexao()->exec($sqlUnlock);
-             
-            return true;
-        }
+        $dao->inserir();
     }
