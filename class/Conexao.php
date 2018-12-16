@@ -12,7 +12,7 @@ class Conexao extends PDO {
             
             if ($this->cnn == NULL){
                 
-                $cnn = parent::__construct($this->dsn, $this->user, $this->pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+                $cnn = parent::__construct($this->dsn, $this->user, $this->pass);
                 $this->handle = $cnn;
                 
                 return $this->handle;

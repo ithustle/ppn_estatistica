@@ -45,5 +45,9 @@
         $produtor = new Produtor($a, $b, $c);
         $dao = new ProdutorDao($conexao, $produtor);
 
-        $dao->inserir();
+        if ($dao->inserir()) {
+        	echo "Feito";
+        } else {
+        	echo "Falhou";
+        }
     }
