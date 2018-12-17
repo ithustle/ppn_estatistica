@@ -1,9 +1,9 @@
 <?php
 
 class Conexao extends PDO {
-    private $dsn = 'mysql:host=localhost;dbname=ppn';
-    private $user = 'ithustle';
-    private $pass = 'naoexiste';
+    private $dsn = 'mysql:host=localhost;dbname=ppn_estatistica';
+    private $user = 'root';
+    private $pass = '';
     private $cnn;
 
 
@@ -12,7 +12,7 @@ class Conexao extends PDO {
             
             if ($this->cnn == NULL){
                 
-                $cnn = parent::__construct($this->dsn, $this->user, $this->pass);
+                $cnn = parent::__construct($this->dsn, $this->user, $this->pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
                 $this->handle = $cnn;
                 
                 return $this->handle;

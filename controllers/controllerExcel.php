@@ -38,11 +38,12 @@
     
     //show the final array
     for ($i = 1; $i < count($return['teste']); $i++){
-        inserir($$return['teste'][$i+1]['A'], $return['teste'][$i+1]['B'], $return['teste'][$i+1]['C']);
+        inserir($conexao, $return['teste'][$i+1]['A'], $return['teste'][$i+1]['B'], $return['teste'][$i+1]['C']);
     }
 
-    function inserir($a, $b, $c) {
-        $produtor = new Produtor($a, $b, $c);
+    function inserir($conexao, $a, $b, $c) {
+
+        $produtor = new Produtor($a, $b, $c, $a, $b);
         $dao = new ProdutorDao($conexao, $produtor);
 
         if ($dao->inserir()) {

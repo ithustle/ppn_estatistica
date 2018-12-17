@@ -3,26 +3,24 @@
 class ProdutorDao {
     
     private $conexao;
-    private $produtor;
+    private $produto;
     
-    public function __construct(Conexao $conexao, Produtor $produtor) {
+    public function __construct(Conexao $conexao, Produto $produto) {
         $this->conexao = $conexao;
-        $this->produtor = $produtor;
+        $this->produto = $produto;
     }
     
     public function inserir() {
-        $sqlLock = "LOCK TABLES produtores WRITE";
+        $sqlLock = "LOCK TABLES produtos WRITE";
         $sqlUnlock = "UNLOCK TABLES";
-        $sql = "INSERT INTO produtores (produtor, provincia, municipio, comuna, estado) VALUES (:produtor, :provincia, :municipio, :comuna, :estado)";
+        $sql = "INSERT INTO produtos (produtos, quantidade, estado) VALUES (:produto, :quantidade, :estado)";
         $this->conexao->beginTransaction();
         $this->conexao->exec($sqlLock);
         $exe = $this->conexao->prepare($sql);
         
-        $exe->bindValue(':produtor', $this->produtor->getProdutor() );
-        $exe->bindValue(':provincia', $this->produtor->getProvincia());
-        $exe->bindValue(':municipio', $this->produtor->getMunicipio());
-        $exe->bindValue(':comuna', $this->produtor->getComuna());
-        $exe->bindValue(':estado', $this->produtor->getEstado());
+        $exe->bindValue(':produto', $this->produto->getProduto() );
+        $exe->bindValue(':quantidade', $this->produto->getQuantidade());
+        $exe->bindValue(':estado', $this->produto->getEstado());
         
         if (!$exe->execute()){
             $this->conexao->rollBack();
@@ -94,7 +92,7 @@ class ProdutorDao {
                     $r['luanda'], 
                     $r['lundan'],
                     $r['lundas'], 
-                    $r['malange'], 
+                    $r['malanje'], 
                     $r['moxico'],
                     $r['namibe'],
                     $r['uige'],

@@ -8,7 +8,7 @@ class Produtor {
     private $comuna;
     private $estado;
 
-    private function __constructor($produtor, $provincia, $municipio, $comuna, $estado) {
+    public function __construct($produtor = NULL, $provincia = NULL, $municipio = NULL, $comuna = NULL, $estado = NULL) {
         $this->produtor = $produtor;
         $this->provincia = $provincia;
         $this->municipio = $municipio;

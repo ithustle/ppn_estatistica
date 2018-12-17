@@ -5,7 +5,7 @@ class Produto {
     private $quantidade;
     private $estado;
 
-    private function __constructor($produto, $quantidade, $estado) {
+    public function __construct($produto, $quantidade, $estado) {
         $this->produto = $produto;
         $this->quantidade = $quantidade;
         $this->estado = $estado;

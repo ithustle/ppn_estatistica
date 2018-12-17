@@ -21,61 +21,24 @@
         </nav>
     </header>
     <main class="corpo">
-      <section class="caixa1">
-          <h3>Força de trabalho</h3>
-          <img src="img/logo.png" width="150">
-          <li>linha1</li>
-          <li>linha2</li>
-          <li>linha3</li>
-          <li>linha4</li>
-      </section>
-         <section class="caixa2">
-              <h3>Força de trabalho</h3>
-              <img src="img/logo.png" width="150">
-              <li>linha1</li>
-              <li>linha2</li>
-              <li>linha3</li>
-              <li>linha4</li>
-         </section>
-         <section class="caixa3">
-              <h3>Força de trabalho</h3>
-              <img src="img/logo.png" width="150">
-              <li>linha1</li>
-              <li>linha2</li>
-              <li>linha3</li>
-              <li>linha4</li>
-         </section>
-         <section class="caixa4">
-              <h3>Força de trabalho</h3>
-              <img src="img/logo.png" width="150">
-              <li>linha1</li>
-              <li>linha2</li>
-              <li>linha3</li>
-              <li>linha4</li>
-         </section>
-          <section class="caixa4">
-               <h3>Força de trabalho</h3>
-               <img src="img/logo.png" width="150">
-               <li>linha1</li>
-              <li>linha2</li>
-              <li>linha3</li>
-              <li>linha4</li>
-          </section>
-         <section class="caixa5">
-              <h3>Força de trabalho</h3>
-              <img src="img/logo.png" width="150">
-              <li>linha1</li>
-              <li>linha2</li>
-              <li>linha3</li>
-              <li>linha4</li>
-         </section>
-        
+        <section class="caixa">
+            <h3>Produtores</h3>
+            <canvas id="produtores" width="80" height="80"></canvas>
+        </section>
+        <section class="caixa">
+            <h3>Províncias</h3>
+            <canvas id="provincia" width="80" height="80"></canvas>
+        </section>
+        <section class="caixa">
+            <h3>Produtos</h3>
+            <canvas id="produtos" width="80" height="80"></canvas>
+        </section>
     </main>
     <footer>
     
     </footer>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-
 </body>
 </html>
