@@ -5,10 +5,10 @@ class Produto {
     private $quantidade;
     private $estado;
 
-    public function __construct($produto, $quantidade, $estado) {
+    public function __construct($produto = NULL, $quantidade = NULL, $estado = NULL) {
         $this->produto = $produto;
-        $this->quantidade = $quantidade;
-        $this->estado = $estado;
+       /* $this->quantidade = $quantidade;
+        $this->estado = $estado;*/
     }
 
     function getProduto() {

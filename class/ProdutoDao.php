@@ -1,6 +1,6 @@
 <?php
 
-class ProdutorDao {
+class ProdutoDao {
     
     private $conexao;
     private $produto;
@@ -13,14 +13,14 @@ class ProdutorDao {
     public function inserir() {
         $sqlLock = "LOCK TABLES produtos WRITE";
         $sqlUnlock = "UNLOCK TABLES";
-        $sql = "INSERT INTO produtos (produtos, quantidade, estado) VALUES (:produto, :quantidade, :estado)";
+        $sql = "INSERT INTO produtos (produtos) VALUES (:produto)";
         $this->conexao->beginTransaction();
         $this->conexao->exec($sqlLock);
         $exe = $this->conexao->prepare($sql);
         
         $exe->bindValue(':produto', $this->produto->getProduto() );
-        $exe->bindValue(':quantidade', $this->produto->getQuantidade());
-        $exe->bindValue(':estado', $this->produto->getEstado());
+        /*$exe->bindValue(':quantidade', $this->produto->getQuantidade());
+        $exe->bindValue(':estado', $this->produto->getEstado());*/
         
         if (!$exe->execute()){
             $this->conexao->rollBack();
@@ -33,10 +33,10 @@ class ProdutorDao {
         }
     }
 
-    public function estatisticaProdutores(){
-        $sqlLock = "LOCK TABLES vw_produtores READ";
+    public function estatisticaProdutos(){
+        $sqlLock = "LOCK TABLES vw_produtos READ";
         $sqlUnlock = "UNLOCK TABLES";
-        $sql = "SELECT * FROM vw_produtores";
+        $sql = "SELECT * FROM vw_produtos ORDER BY quantidade DESC LIMIT 10";
         
         $this->conexao->beginTransaction();
         $this->conexao->exec($sqlLock);
@@ -50,55 +50,7 @@ class ProdutorDao {
             $this->conexao->commit();
             $this->conexao->exec($sqlUnlock);
             
-            foreach ($retorno as $r){
-                return array (
-                    $r['produtores'], 
-                    $r['activos'], 
-                    $r['inactivos']
-                );
-            }
-        }
-    }
-
-    public function provinciaProdutor(){
-        $sqlLock = "LOCK TABLES vw_prov READ";
-        $sqlUnlock = "UNLOCK TABLES";
-        $sql = "SELECT * FROM vw_prov";
-        
-        $this->conexao->beginTransaction();
-        $this->conexao->exec($sqlLock);
-        $exe = $this->conexao->prepare($sql);
-        
-        if (!$exe->execute()){
-            $this->conexao->rollBack();
-            print_r($exe->errorInfo()[2]);
-        }  else {
-            $retorno = $exe->fetchAll();
-            $this->conexao->commit();
-            $this->conexao->exec($sqlUnlock);
-            
-            foreach ($retorno as $r){
-                return array (
-                    $r['bengo'], 
-                    $r['benguela'], 
-                    $r['bie'],
-                    $r['cabinda'], 
-                    $r['cc'], 
-                    $r['cn'],
-                    $r['cs'], 
-                    $r['cunene'], 
-                    $r['huambo'],
-                    $r['huila'], 
-                    $r['luanda'], 
-                    $r['lundan'],
-                    $r['lundas'], 
-                    $r['malanje'], 
-                    $r['moxico'],
-                    $r['namibe'],
-                    $r['uige'],
-                    $r['zaire']
-                );
-            }
+            return $retorno;
         }
     }
 }

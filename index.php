@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div id="fundo"></div>
+    <div id="painel_insercao">
+        <h3>Fonte de Dados</h3>
+        <section>
+            <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="ficheiros[]" id="ficheiros" multiple />
+            <input type="password" id="senha" placeholder="Palavra-passe" />
+            <div id="contentButton"></div>
+        </section>
+    </div>
     <header class="cabeca">
         <div class="topo">
             <h3>Portal de Divulgação da Produção Nacional | Estatísticas</h3>
@@ -16,22 +25,22 @@
                 <div class="info">
                     <span>Área de administrador</span>
                 </div>
-                <button>Entrar</button>
+                <button onclick="entrar()">Entrar</button>
             </nav>
         </nav>
     </header>
     <main class="corpo">
         <section class="caixa">
             <h3>Produtores</h3>
-            <canvas id="produtores" width="80" height="80"></canvas>
+            <canvas id="produtores" width=90" height="80"></canvas>
         </section>
         <section class="caixa">
             <h3>Províncias</h3>
-            <canvas id="provincia" width="80" height="80"></canvas>
+            <canvas id="provincia" width="90" height="80"></canvas>
         </section>
         <section class="caixa">
             <h3>Produtos</h3>
-            <canvas id="produtos" width="80" height="80"></canvas>
+            <canvas id="produtos" width="180" height="190"></canvas>
         </section>
     </main>
     <footer>

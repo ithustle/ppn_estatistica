@@ -1,13 +1,16 @@
 $(function() {
 	var ctxProd = document.getElementById("produtores");
 	var ctxProdutos = document.getElementById("produtos");
+	var ctxProdutosIn = document.getElementById("produtosIn");
 	var ctxProv = document.getElementById("provincia").getContext('2d');
+	var senha = document.getElementById("senha");
 
+	$("#painel_insercao").css("display", "none");
+	$("#fundo").css("display", "none");
+	$("#contentButton").css("display", "none");
 
 	estatistica = () => {
-		$.getJSON('./controllers/controllerGetEstatisticas.php',(data) => {
-            console.log(data);
-
+		$.getJSON('./controllers/controllerGetEstatisticas.php', (data) => {
             var myChart1 = new Chart(ctxProd, {
 			    type: 'doughnut',
 			    data: {
@@ -63,13 +66,23 @@ $(function() {
 			    }
 			});
 
+			let produtosActivos = [];
+			let produtosInactivos = [];
+			let quantidadeActivos = [];
+			let quantidadeInactivos = [];
+
+			for (let i in data[2]) {
+				produtosActivos.push(data[2][i].produtos);
+				quantidadeActivos.push(data[2][i].quantidade);
+			}
+
 			var myChart3 = new Chart(ctxProdutos, {
 			    type: 'bar',
 			    data: {
-			        labels: ["Cimento", "Banana"],
+			        labels: produtosActivos,
 			        datasets: [{
-			            label: 'Províncias',
-			            data: [3, 23],
+			            label: 'Top 10',
+			            data: quantidadeActivos,
 			            backgroundColor: [
 			                'rgb(255, 99, 132)',
 			                'rgb(54, 162, 235)',
@@ -90,8 +103,63 @@ $(function() {
 			        }]
 			    }
 			});
+
+			for (let i in data[3]) {
+				produtosInactivos.push(data[3][i].produtos);
+				quantidadeInactivos.push(data[3][i].quantidade);
+			}
         });
 	}
 
 	estatistica();
+
+	entrar = () => {
+		$("#painel_insercao").css("display", "block");
+		$("#fundo").css("display", "block");
+	}
+
+	$("#fundo").on("click", () => {
+		$("#painel_insercao").css("display", "none");
+		$("#fundo").css("display", "none");
+	});
+
+	senha.addEventListener("keyup", async (event) => {
+		event.preventDefault();
+		if (event.keyCode === 13) {
+			$("#contentButton").css("display", "block");
+			$.post('./controllers/controllerPassword.php', { password: senha.value }, (data) => {
+				if (data === "") {
+					$("#contentButton").html("<p id='msg'>Palavra-passe incorrecta.</p>");
+					$("#senha").val("");
+				} else {
+					$("#contentButton").html('<button type="button" id="enviar" onclick="enviar()">Enviar</button>');
+					$("#senha").val("");
+				}
+			});
+		}
+	});
+
+	enviar = () => {
+		let formData = new FormData();
+
+		const ins = document.getElementById('ficheiros').files.length;
+		for (var x = 0; x < ins; x++) {
+			formData.append('ficheiros[]', $('input[type=file]')[0].files[x]);
+		}
+
+		$("#contentButton").html("<img src='../img/load.gif' height='20' />");
+
+        $.ajax({
+            url: "./controllers/controllerExcel.php",
+            method: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function(data) {
+                if (data) {
+					window.location.reload();
+				}
+            }
+        });
+	}
 });

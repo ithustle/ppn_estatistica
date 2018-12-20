@@ -94,7 +94,7 @@ class ProdutorDao {
                     $r['luanda'], 
                     $r['lundan'],
                     $r['lundas'], 
-                    $r['malange'], 
+                    $r['malanje'], 
                     $r['moxico'],
                     $r['namibe'],
                     $r['uige'],
