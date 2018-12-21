@@ -42,12 +42,10 @@
             <h3>Produtos</h3>
             <canvas id="produtos" width="180" height="190"></canvas>
         </section>
+        <footer class="marquee"></footer>
     </main>
-    <footer>
-    
-    </footer>
-        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>

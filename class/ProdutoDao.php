@@ -13,14 +13,15 @@ class ProdutoDao {
     public function inserir() {
         $sqlLock = "LOCK TABLES produtos WRITE";
         $sqlUnlock = "UNLOCK TABLES";
-        $sql = "INSERT INTO produtos (produtos) VALUES (:produto)";
+        $sql = "INSERT INTO produtos (produtos, quantidade, unidades, produtores) VALUES (:produto, :quantidade, :unidades, :produtores)";
         $this->conexao->beginTransaction();
         $this->conexao->exec($sqlLock);
         $exe = $this->conexao->prepare($sql);
         
         $exe->bindValue(':produto', $this->produto->getProduto() );
-        /*$exe->bindValue(':quantidade', $this->produto->getQuantidade());
-        $exe->bindValue(':estado', $this->produto->getEstado());*/
+        $exe->bindValue(':quantidade', $this->produto->getQuantidade());
+        $exe->bindValue(':unidades', $this->produto->getUnidade());
+        $exe->bindValue(':produtores', $this->produto->getProdutores());
         
         if (!$exe->execute()){
             $this->conexao->rollBack();

@@ -18,5 +18,6 @@
             $dao->provinciaProdutor(), 
             $dao->estatisticaProdutores(), 
             $daoProduto->estatisticaProdutos(),
+            $dao->contactosProdutores()
         ]
     );

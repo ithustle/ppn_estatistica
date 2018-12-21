@@ -43,7 +43,7 @@
         
         //show the final array
         for ($i = 1; $i < count($return['produtores']); $i++){
-            inserirProdutor($conexao, $return['produtores'][$i+2]['B'], $return['produtores'][$i+2]['E'], $return['produtores'][$i+2]['F'], $return['produtores'][$i+2]['G'], $return['produtores'][$i+2]['H']);
+            inserirProdutor($conexao, $return['produtores'][$i+2]['B'], $return['produtores'][$i+2]['E'], $return['produtores'][$i+2]['F'], $return['produtores'][$i+2]['G'], $return['produtores'][$i+2]['H'], $return['produtores'][$i+2]['D']);
         }
     }
 
@@ -72,21 +72,21 @@
         
         //show the final array
         for ($i = 1; $i < count($return['produtos']); $i++){
-            inserirProdutos($conexao, $return['produtos'][$i]['A']);
+            inserirProdutos($conexao, $return['produtos'][$i]['A'], $return['produtos'][$i]['D'], $return['produtos'][$i]['C'], $return['produtos'][$i]['B']);
         }
         echo true;
     }
 
-    function inserirProdutor($conexao, $a, $b, $c, $d, $e) {
+    function inserirProdutor($conexao, $a, $b, $c, $d, $e, $f) {
 
-        $produtor = new Produtor($a, $b, $c, $d, $e );
+        $produtor = new Produtor($a, $b, $c, $d, $e, $f);
         $dao = new ProdutorDao($conexao, $produtor);
 
         $dao->inserir();
     }
 
-    function inserirProdutos($conexao, $a) {
-        $produto = new Produto($a);
+    function inserirProdutos($conexao, $a, $b, $c, $d) {
+        $produto = new Produto($a, $b, $c, $d);
         $dao = new ProdutoDao($conexao, $produto);
 
         $dao->inserir();

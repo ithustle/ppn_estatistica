@@ -11,10 +11,11 @@ $(function() {
 
 	estatistica = () => {
 		$.getJSON('./controllers/controllerGetEstatisticas.php', (data) => {
+			console.log(data)
             var myChart1 = new Chart(ctxProd, {
 			    type: 'doughnut',
 			    data: {
-			        labels: ["Registados", "Activos", "Inactivos"],
+			        labels: ["Registados", "Com Produtos"],
 			        datasets: [{
 			            data: data[1],
 			            backgroundColor: [
@@ -39,7 +40,7 @@ $(function() {
 			});
 
 			var myChart2 = new Chart(ctxProv, {
-			    type: 'horizontalBar',
+			    type: 'line',
 			    data: {
 			        labels: ["Bengo", "Benguela", "Bié", "Cabinda", "C. Cubando", "C. Norte", "C. Sul", "Cunene", "Huambo", "Huíla", "Luanda", "L. Norte", "L. Sul", "Malanje", "Moxico", "Namibe", "Uíge", "Zaire"],
 			        datasets: [{
@@ -67,17 +68,17 @@ $(function() {
 			});
 
 			let produtosActivos = [];
-			let produtosInactivos = [];
+			let produtores = [];
 			let quantidadeActivos = [];
-			let quantidadeInactivos = [];
+			let telefones = [];
 
 			for (let i in data[2]) {
-				produtosActivos.push(data[2][i].produtos);
-				quantidadeActivos.push(data[2][i].quantidade);
+				produtosActivos.push(`${data[2][i].produtos} (${data[2][i].unidades})`);
+				quantidadeActivos.push(`${data[2][i].quantidade}`);
 			}
 
 			var myChart3 = new Chart(ctxProdutos, {
-			    type: 'bar',
+			    type: 'pie',
 			    data: {
 			        labels: produtosActivos,
 			        datasets: [{
@@ -89,25 +90,22 @@ $(function() {
 			                'rgb(255, 206, 86)',
 			                'rgb(75, 192, 192)',
 			                'rgb(153, 102, 255)',
-			                'rgb(255, 159, 64)'
-			            ],
-			            borderColor: [
-			                'rgba(255,99,132,1)',
-			                'rgba(54, 162, 235, 1)',
-			                'rgba(255, 206, 86, 1)',
-			                'rgba(75, 192, 192, 1)',
-			                'rgba(153, 102, 255, 1)',
-			                'rgba(255, 159, 64, 1)'
+			                'rgb(255, 159, 64)',
+			                'rgb(215, 159, 74)',
+			                'rgb(55, 139, 74)',
+			                'rgb(225, 129, 84)',
+			                'rgb(155, 59, 94)',
 			            ],
 			            borderWidth: 1
 			        }]
 			    }
 			});
 
-			for (let i in data[3]) {
-				produtosInactivos.push(data[3][i].produtos);
-				quantidadeInactivos.push(data[3][i].quantidade);
+			for (let i=0; i < data[3].length; i++) {
+				produtores.push(` ${data[3][i].produtor} (${data[3][i].produtos}) - ${data[3][i].telefone}`);
 			}
+
+			$(".marquee").append(`<p>Produtores:${produtores}</p>`);
         });
 	}
 

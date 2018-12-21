@@ -13,7 +13,7 @@ class ProdutorDao {
     public function inserir() {
         $sqlLock = "LOCK TABLES produtores WRITE";
         $sqlUnlock = "UNLOCK TABLES";
-        $sql = "INSERT INTO produtores (produtor, provincia, municipio, comuna, estado) VALUES (:produtor, :provincia, :municipio, :comuna, :estado)";
+        $sql = "INSERT INTO produtores (produtor, provincia, municipio, comuna, estado, telefone) VALUES (:produtor, :provincia, :municipio, :comuna, :estado, :telefone)";
         $this->conexao->beginTransaction();
         $this->conexao->exec($sqlLock);
         $exe = $this->conexao->prepare($sql);
@@ -23,6 +23,7 @@ class ProdutorDao {
         $exe->bindValue(':municipio', $this->produtor->getMunicipio());
         $exe->bindValue(':comuna', $this->produtor->getComuna());
         $exe->bindValue(':estado', $this->produtor->getEstado());
+        $exe->bindValue(':telefone', $this->produtor->getTelefone());
         
         if (!$exe->execute()){
             $this->conexao->rollBack();
@@ -54,9 +55,8 @@ class ProdutorDao {
             
             foreach ($retorno as $r){
                 return array (
-                    $r['produtores'], 
-                    $r['activos'], 
-                    $r['inactivos']
+                    $r['produtores'],
+                    $r['produtores_prod']
                 );
             }
         }
@@ -101,6 +101,27 @@ class ProdutorDao {
                     $r['zaire']
                 );
             }
+        }
+    }
+
+    public function contactosProdutores(){
+        $sqlLock = "LOCK TABLES vw_produtores_produtos READ";
+        $sqlUnlock = "UNLOCK TABLES";
+        $sql = "SELECT produtor, telefone, produtos FROM vw_produtores_produtos ORDER BY produtor ASC;";
+        
+        $this->conexao->beginTransaction();
+        $this->conexao->exec($sqlLock);
+        $exe = $this->conexao->prepare($sql);
+        
+        if (!$exe->execute()){
+            $this->conexao->rollBack();
+            print_r($exe->errorInfo()[2]);
+        }  else {
+            $retorno = $exe->fetchAll();
+            $this->conexao->commit();
+            $this->conexao->exec($sqlUnlock);
+            
+            return $retorno;
         }
     }
 }
