@@ -37,7 +37,28 @@ class ProdutoDao {
     public function estatisticaProdutos(){
         $sqlLock = "LOCK TABLES vw_produtos READ";
         $sqlUnlock = "UNLOCK TABLES";
-        $sql = "SELECT * FROM vw_produtos ORDER BY quantidade DESC LIMIT 10";
+        $sql = "SELECT * FROM vw_produtos ORDER BY quantidade DESC LIMIT 15";
+        
+        $this->conexao->beginTransaction();
+        $this->conexao->exec($sqlLock);
+        $exe = $this->conexao->prepare($sql);
+        
+        if (!$exe->execute()){
+            $this->conexao->rollBack();
+            print_r($exe->errorInfo()[2]);
+        }  else {
+            $retorno = $exe->fetchAll();
+            $this->conexao->commit();
+            $this->conexao->exec($sqlUnlock);
+            
+            return $retorno;
+        }
+    }
+
+    public function estatisticaProdutosRodape(){
+        $sqlLock = "LOCK TABLES vw_produtos READ";
+        $sqlUnlock = "UNLOCK TABLES";
+        $sql = "SELECT * FROM vw_produtos ORDER BY quantidade DESC";
         
         $this->conexao->beginTransaction();
         $this->conexao->exec($sqlLock);

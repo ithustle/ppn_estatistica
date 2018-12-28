@@ -1,5 +1,4 @@
 $(function() {
-	var ctxProd = document.getElementById("produtores");
 	var ctxProdutos = document.getElementById("produtos");
 	var ctxProdutosIn = document.getElementById("produtosIn");
 	var ctxProv = document.getElementById("provincia").getContext('2d');
@@ -9,35 +8,20 @@ $(function() {
 	$("#fundo").css("display", "none");
 	$("#contentButton").css("display", "none");
 
+	addCommas = (nStr) => {
+		nStr += '';
+		x = nStr.split('.');
+		x1 = x[0];
+		x2 = x.length > 1 ? ',' + x[1] : '';
+		var rgx = /(\d+)(\d{3})/;
+		while (rgx.test(x1)) {
+			x1 = x1.replace(rgx, '$1' + '.' + '$2');
+		}
+		return x1 + x2;
+	}
+
 	estatistica = () => {
 		$.getJSON('./controllers/controllerGetEstatisticas.php', (data) => {
-			console.log(data)
-            var myChart1 = new Chart(ctxProd, {
-			    type: 'doughnut',
-			    data: {
-			        labels: ["Registados", "Com Produtos"],
-			        datasets: [{
-			            data: data[1],
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0.7)',
-			                'rgba(54, 162, 235, 0.7)',
-			                'rgba(255, 206, 86, 0.7)',
-			                'rgba(75, 192, 192, 0.7)',
-			                'rgba(153, 102, 255, 0.7)',
-			                'rgba(255, 159, 64, 0.7)'
-			            ],
-			            borderColor: [
-			                'rgba(255,99,132,1)',
-			                'rgba(54, 162, 235, 1)',
-			                'rgba(255, 206, 86, 1)',
-			                'rgba(75, 192, 192, 1)',
-			                'rgba(153, 102, 255, 1)',
-			                'rgba(255, 159, 64, 1)'
-			            ],
-			            borderWidth: 1
-			        }]
-			    }
-			});
 
 			var myChart2 = new Chart(ctxProv, {
 			    type: 'line',
@@ -73,16 +57,17 @@ $(function() {
 			let telefones = [];
 
 			for (let i in data[2]) {
-				produtosActivos.push(`${data[2][i].produtos} (${data[2][i].unidades})`);
-				quantidadeActivos.push(`${data[2][i].quantidade}`);
+				//produtosActivos.push(`${data[2][i].produtos} (${data[2][i].unidades})`);
+				//quantidadeActivos.push(`${data[2][i].quantidade}`);
+				produtosActivos.push({ label: `${data[2][i].produtos} - ${addCommas(data[2][i].quantidade)} ${data[2][i].unidades}`,  y: parseInt(data[2][i].quantidade) })
 			}
 
-			var myChart3 = new Chart(ctxProdutos, {
-			    type: 'pie',
+			/*var myChart3 = new Chart(ctxProdutos, {
+			    type: 'bar',
 			    data: {
 			        labels: produtosActivos,
 			        datasets: [{
-			            label: 'Top 10',
+			            label: ["1", "ok", "oks"],
 			            data: quantidadeActivos,
 			            backgroundColor: [
 			                'rgb(255, 99, 132)',
@@ -99,13 +84,31 @@ $(function() {
 			            borderWidth: 1
 			        }]
 			    }
-			});
+			});*/
+			
+			console.log(produtosActivos)
+			var options = {
+				title: {
+					text: "Top 15 de Produtos"              
+				},
+				data: [              
+					{
+						// Change type to "doughnut", "line", "splineArea", etc.
+						type: "doughnut",
+						dataPoints: produtosActivos,
+						indexLabelPlacement: "outside",
+					}
+				]
+			};
+			
+			
+			$("#chartContainer").CanvasJSChart(options);
 
-			for (let i=0; i < data[3].length; i++) {
-				produtores.push(` ${data[3][i].produtor} (${data[3][i].produtos}) - ${data[3][i].telefone}`);
+			for (let i=0; i < data[2].length; i++) {
+				produtores.push(` ${data[3][i].produtos} - ${addCommas(data[3][i].quantidade)} ${data[3][i].unidades}`);
 			}
 
-			$(".marquee").append(`<p>Produtores:${produtores}</p>`);
+			$(".marquee").append(`<p>Produtos:${produtores}</p>`);
         });
 	}
 

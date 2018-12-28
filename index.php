@@ -31,21 +31,16 @@
     </header>
     <main class="corpo">
         <section class="caixa">
-            <h3>Produtores</h3>
-            <canvas id="produtores" width=90" height="80"></canvas>
-        </section>
-        <section class="caixa">
             <h3>Províncias</h3>
             <canvas id="provincia" width="90" height="80"></canvas>
         </section>
-        <section class="caixa">
-            <h3>Produtos</h3>
-            <canvas id="produtos" width="180" height="190"></canvas>
-        </section>
+        <div id="chartContainer" style="height: 500px; width: 100%;"></div>
         <footer class="marquee"></footer>
     </main>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>

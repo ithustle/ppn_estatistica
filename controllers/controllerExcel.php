@@ -72,7 +72,7 @@
         
         //show the final array
         for ($i = 1; $i < count($return['produtos']); $i++){
-            inserirProdutos($conexao, $return['produtos'][$i]['A'], $return['produtos'][$i]['D'], $return['produtos'][$i]['C'], $return['produtos'][$i]['B']);
+            inserirProdutos($conexao, $return['produtos'][$i]['A'], $return['produtos'][$i]['B'], $return['produtos'][$i]['C'], $return['produtos'][$i]['D']);
         }
         echo true;
     }
