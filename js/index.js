@@ -59,7 +59,11 @@ $(function() {
 			for (let i in data[2]) {
 				//produtosActivos.push(`${data[2][i].produtos} (${data[2][i].unidades})`);
 				//quantidadeActivos.push(`${data[2][i].quantidade}`);
-				produtosActivos.push({ label: `${data[2][i].produtos} - ${addCommas(data[2][i].quantidade)} ${data[2][i].unidades}`,  y: parseInt(data[2][i].quantidade) })
+				if (data[2][i].produtos !== "Outros Produtos Para Indústrias Transformadoras" ) {
+					if (data[2][i].produtos !== "Outros Produtos Para Agricultura, Produção Animal, Caça, Floresta, Pesca" ) {
+						produtosActivos.push({ label: `${data[2][i].produtos} - ${addCommas(data[2][i].quantidade)} ${data[2][i].unidades}`,  y: parseInt(data[2][i].quantidade) })
+					}
+				}
 			}
 
 			/*var myChart3 = new Chart(ctxProdutos, {

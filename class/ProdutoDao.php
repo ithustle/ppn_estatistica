@@ -37,7 +37,7 @@ class ProdutoDao {
     public function estatisticaProdutos(){
         $sqlLock = "LOCK TABLES vw_produtos READ";
         $sqlUnlock = "UNLOCK TABLES";
-        $sql = "SELECT * FROM vw_produtos ORDER BY quantidade DESC LIMIT 15";
+        $sql = "SELECT * FROM vw_produtos ORDER BY quantidade DESC LIMIT 17";
         
         $this->conexao->beginTransaction();
         $this->conexao->exec($sqlLock);
